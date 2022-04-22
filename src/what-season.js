@@ -12,8 +12,11 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function getSeason(date=null) {
-  if (!date) return 'Unable to determine the time of year!';
-  if (!(date instanceof Date)) throw new Error('Invalid date!')
+  if (!date) {
+    return 'Unable to determine the time of year!';
+  } else if (!(date instanceof Date) || Object.getOwnPropertyNames(date).length > 0) {
+    throw new Error('Invalid date!');
+  }
   const month = date.getMonth() + 1;
   console.log(month)
   if (month >= 3 && month <= 5) {
