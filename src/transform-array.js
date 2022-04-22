@@ -13,25 +13,30 @@ const { NotImplementedError } = require('../extensions/index.js');
  * transform([1, 2, 3, '--discard-prev', 4, 5]) => [1, 2, 4, 5]
  * 
  */
-function transform(arr) {
-  if (typeof arr != 'object') throw new Error("'arr' parameter must be an instance of the Array!")
-  const m = [...arr];
-  for (let i = 0; i < m.length; i++) {
-    if (typeof m[i] == 'string') {
-      switch (m[i]) {
-        case ("--discard-next"):
-          m.splice(i,2);
-        break;
-        case ("--discard-prev"):
-          m.splice(i-1,2);
-        break;
-        case ("--double-next"):
-          m[i] = 2 * m[i+1];
-        break;
-        case ("--double-prev"):
-          m[i] = 2 * m[i-1];
-        break;
+ function transform(arr) {
+  if (!Array.isArray(arr)) {
+    throw new Error("'arr' parameter must be an instance of the Array!");
+  }
+  const m = [];
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] == '--discard-next') {
+      i++; 
+      continue;
+    } 
+    else if (arr[i] == '--discard-prev') {
+      if (m[m.length-1] === arr[i-1] && i > 0) {
+        m.pop();
       }
+    } else if (arr[i] == '--double-next') {
+      if (i < arr.length-1) {
+        m.push(arr[i+1]);
+      }
+    } else if (arr[i] == '--double-prev') {
+      if (m[m.length-1] === arr[i-1] && i > 0) {
+        m.push(arr[i-1]);
+      }
+    } else  {
+      m.push(arr[i])
     }
   }
   return m;
