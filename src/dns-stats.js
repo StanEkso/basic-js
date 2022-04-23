@@ -32,21 +32,23 @@ function getDNSStats(domains) {
       dom.push(object);
     }
   }
+  const locationDomain = `.${dom[0]}`;
+  let countLoc = 0;
+  const baseDomain = `.${dom[0]}.${dom[1]}`;
+  let countBase = 0;
+  const counts = [];
+  for (let i = 2; i < dom.length;i++) counts.push(0);
   let result = {};
-  let count = [];
-  for (let i = 0; i < dom.length; i++) count[i] = 0;
+  let pos = 2;
   for (let domain of domains) {
-    if (domain.includes(dom[0])) count[0]++;
-    if (domain.includes(dom[0]) && domain.includes(dom[1])) count[1]++;
-    for (let index = 2; index <dom.length; index++ ) {
-      if (domain.includes(dom[0]) && domain.includes(dom[1]) && domain.includes(dom[index])) count[index]++;
-    }
+    pos = 2;
+    if(domain.includes(locationDomain)) countLoc++;
+    if (domain.includes(dom[1])) countBase++;
+    if (domain.includes(dom[pos])) counts[pos++-2]++;
   }
-  result[`.${dom[0]}`] = count[0];
-  result[`.${dom[0]}.${dom[1]}`] = count[1];
-  for (let index = 2; index <dom.length; index++ ) { 
-    result[`.${dom[0]}.${dom[1]}.${dom[index]}`] = count[index];
-  }
+  result[locationDomain] = countLoc;
+  result[baseDomain] = countBase;
+  for (let i = 2; i < dom.length; i++) result[baseDomain+`.${dom[i]}`] = counts[i-2]
   return result
 }
 
