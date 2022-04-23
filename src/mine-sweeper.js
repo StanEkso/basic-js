@@ -28,65 +28,76 @@ function minesweeper(matrix) {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix.length; j++) {
       let count = 0;
-      if (i === 0 && j === 0) {
-        count += matrix[i + 1][j] ? 1 : 0;
-        count += matrix[i + 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
+      // Первый ряд, т.е. нет клеток выше
+      if (i == 0) {
+        if (j== 0) {
+          // первая слева клетка
+          count += matrix[i + 1][j];
+          count += matrix[i + 1][j + 1];
+          count += matrix[i][j + 1];
+        }
+        else if (j > 0 && j < matrix[i].length - 1) {
+          // клетки, кроме крайних
+          count += matrix[i][j - 1];
+          count += matrix[i + 1][j - 1];
+          count += matrix[i + 1][j];
+          count += matrix[i + 1][j + 1];
+          count += matrix[i][j + 1];
+        }
+        else if (j === matrix[i].length - 1) { 
+          // правая крайняя клетка
+          count += matrix[i][j - 1];
+          count += matrix[i + 1][j - 1];
+          count += matrix[i + 1][j];
+        }
       }
-      if (i === 0 && j > 0 && j < matrix[i].length - 1) {
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j] ? 1 : 0;
-        count += matrix[i + 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
+      // все ряды кроме первого и последнего
+      if (i > 0 && i < matrix.length - 1) {
+        if (j === 0) {          // первая слева клетка
+          count += matrix[i - 1][j];
+          count += matrix[i - 1][j + 1];
+          count += matrix[i][j + 1];
+          count += matrix[i + 1][j + 1];
+          count += matrix[i + 1][j];
+        }
+        else if (j > 0 && j < matrix[i].length - 1) {          // клетки, кроме крайних
+          count += matrix[i - 1][j];
+          count += matrix[i - 1][j - 1];
+          count += matrix[i][j - 1];
+          count += matrix[i + 1][j - 1];
+          count += matrix[i + 1][j];
+          count += matrix[i + 1][j + 1];
+          count += matrix[i][j + 1];
+          count += matrix[i - 1][j + 1];
+        }
+        else if (j === matrix[i].length - 1) {          // правая крайняя клетка
+          count += matrix[i - 1][j];
+          count += matrix[i - 1][j - 1];
+          count += matrix[i][j - 1];
+          count += matrix[i + 1][j - 1];
+          count += matrix[i + 1][j];
+        }
       }
-      if (i === 0 && j === matrix[i].length - 1) {
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j] ? 1 : 0;
+      // последний ряд
+      if (i === matrix.length - 1) {
+        if (j === 0) {          // первая слева клетка
+          count += matrix[i - 1][j];
+          count += matrix[i - 1][j + 1];
+          count += matrix[i][j + 1];
+        }
+        else if (j > 0 && j < matrix[i].length - 1) {          // клетки, кроме крайних
+          count += matrix[i][j - 1];
+          count += matrix[i - 1][j - 1];
+          count += matrix[i - 1][j];
+          count += matrix[i - 1][j + 1];
+          count += matrix[i][j + 1];
+        }
+        else if ( j === matrix[i].length - 1) {          // правая крайняя клетка
+          count += matrix[i][j - 1]
+          count += matrix[i - 1][j - 1]
+          count += matrix[i - 1][j];
+        }
       }
-      if (i > 0 && i < matrix.length - 1 && j === 0) {
-        count += matrix[i - 1][j] ? 1 : 0;
-        count += matrix[i - 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
-        count += matrix[i + 1][j + 1] ? 1 : 0;
-        count += matrix[i + 1][j] ? 1 : 0;
-      }
-      if (i > 0 && i < matrix.length - 1 && j > 0 && j < matrix[i].length - 1) {
-        count += matrix[i - 1][j] ? 1 : 0;
-        count += matrix[i - 1][j - 1] ? 1 : 0;
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j] ? 1 : 0;
-        count += matrix[i + 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
-        count += matrix[i - 1][j + 1] ? 1 : 0;
-      }
-      if (i > 0 && i < matrix.length - 1 && j === matrix[i].length - 1) {
-        count += matrix[i - 1][j] ? 1 : 0;
-        count += matrix[i - 1][j - 1] ? 1 : 0;
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j - 1] ? 1 : 0;
-        count += matrix[i + 1][j] ? 1 : 0;
-      }
-      if (i === matrix.length - 1 && j === 0) {
-        count += matrix[i - 1][j] ? 1 : 0;
-        count += matrix[i - 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
-      }
-      if (i === matrix.length - 1 && j > 0 && j < matrix[i].length - 1) {
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i - 1][j - 1] ? 1 : 0;
-        count += matrix[i - 1][j] ? 1 : 0;
-        count += matrix[i - 1][j + 1] ? 1 : 0;
-        count += matrix[i][j + 1] ? 1 : 0;
-      }
-      if (i === matrix.length - 1 && j === matrix[i].length - 1) {
-        count += matrix[i][j - 1] ? 1 : 0;
-        count += matrix[i - 1][j - 1] ? 1 : 0;
-        count += matrix[i - 1][j] ? 1 : 0;
-      }
-
       resultation[i][j] = count
     }
   }
