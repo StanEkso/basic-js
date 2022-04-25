@@ -22,12 +22,14 @@ function renameFiles(names) {
     copy.push(shifted)
     if (names.includes(shifted)) {
       let count =0;
-      for (let index = 0; index < names.length; index++) {
-        if (names[index] === shifted) names[index] = names[index]+`(${++count})`;
-      }
+      names = names.map(name => {
+        if (name === shifted) return `${name}(${++count})`;
+        else return name;
+      })
     }
   }
   return copy.concat(names);
+  
 }
 
 module.exports = {

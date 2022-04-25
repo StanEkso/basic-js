@@ -18,9 +18,7 @@ function getSeason(date=null) {
     throw new Error('Invalid date!');
   }
   const month = date.getMonth() + 1;
-  console.log(month)
   if (month >= 3 && month <= 5) {
-    console.log('sp')
     return 'spring';
   }
 

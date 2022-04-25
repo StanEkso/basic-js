@@ -24,7 +24,7 @@ class VigenereCipheringMachine {
     this.mode = mode;
   }
   vigenere(message, key, mode='encrypt') {
-    
+    const n = 26 // букв в алфавите
     let result = ''
     let pos= 0;
     for (let i = 0; i < message.length; i++) {
@@ -32,9 +32,9 @@ class VigenereCipheringMachine {
         result+=message[i];
       } else {
         if (mode === 'encrypt') {
-          result += String.fromCharCode((message.charCodeAt(i) + key.charCodeAt(pos % key.length) - 2 * 65) % 26 + 65);
+          result += String.fromCharCode((message.charCodeAt(i) - 65 + key.charCodeAt(pos % key.length) -  65) % n + 65);
         } else if (mode === 'decrypt') {
-          result += String.fromCharCode((message.charCodeAt(i) - key.charCodeAt(pos % key.length) + 26) % 26 + 65);
+          result += String.fromCharCode((message.charCodeAt(i) - 65 - (key.charCodeAt(pos % key.length) - 65) + n) % n + 65);
         }
         pos++;
       }

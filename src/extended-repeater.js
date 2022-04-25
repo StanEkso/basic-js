@@ -20,8 +20,10 @@ function repeater(str, options) {
         addition = '',additionRepeatTimes = '1',
         additionSeparator = '|'} = options
   const addArr = [];
+  
   for (let i = 0; i < additionRepeatTimes; i++) addArr.push(String(addition));
-  const advanced = addArr.join(additionSeparator)
+  const advanced = addArr.join(additionSeparator) // доп строка
+
   const resultArray = [];
   for (let i = 0; i < repeatTimes; i++) resultArray.push(String(str) + advanced);
   return resultArray.join(separator);
